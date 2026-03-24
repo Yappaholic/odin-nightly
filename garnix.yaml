@@ -1,4 +1,0 @@
-actions:
-  - on: push
-    run: "nix flake update odin-src ols-src"
-    withRepoContents: true
