@@ -1,0 +1,6 @@
+actions:
+  - on: 
+      schedule:
+        - cron: "0 0 * * *"
+    run: "nix flake update odin-src ols-src"
+    withRepoContents: true

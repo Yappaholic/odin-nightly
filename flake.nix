@@ -44,6 +44,12 @@
           default = odin-nightly;
           ols = ols-nightly;
         };
+        apps.updater = pkgs.runCommand "update.sh" {} ''
+          nix flake update odin-src
+          nix flake update ols-src
+          git add .
+          git commit -m "update sources $(date)"
+        '';
         devShells.default = devShell;
       };
       flake = {
