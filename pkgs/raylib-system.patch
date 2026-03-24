@@ -1,0 +1,56 @@
+diff --git a/vendor/raylib/raygui.odin b/vendor/raylib/raygui.odin
+index 559437a60..dc334ecd8 100644
+--- a/vendor/raylib/raygui.odin
++++ b/vendor/raylib/raygui.odin
+@@ -4,8 +4,11 @@ import "core:c"
+ 
+ RAYGUI_SHARED :: #config(RAYGUI_SHARED, false)
+ RAYGUI_WASM_LIB :: #config(RAYGUI_WASM_LIB, "wasm/libraygui.a")
++RAYGUI_SYSTEM :: #config(RAYGUI_SYSTEM, true)
+ 
+-when ODIN_OS == .Windows {
++when RAYGUI_SYSTEM {
++	foreign import lib "system:raygui"
++} else when ODIN_OS == .Windows {
+ 	foreign import lib {
+ 		"windows/rayguidll.lib" when RAYGUI_SHARED else "windows/raygui.lib",
+ 	}
+diff --git a/vendor/raylib/raylib.odin b/vendor/raylib/raylib.odin
+index b051f1885..c6687be14 100644
+--- a/vendor/raylib/raylib.odin
++++ b/vendor/raylib/raylib.odin
+@@ -99,8 +99,11 @@ MAX_MATERIAL_MAPS      :: #config(RAYLIB_MAX_MATERIAL_MAPS, 12)
+ 
+ RAYLIB_SHARED :: #config(RAYLIB_SHARED, false)
+ RAYLIB_WASM_LIB :: #config(RAYLIB_WASM_LIB, "wasm/libraylib.a")
++RAYLIB_SYSTEM :: #config(RAYLIB_SYSTEM, true)
+ 
+-when ODIN_OS == .Windows {
++when RAYLIB_SYSTEM {
++	foreign import lib "system:raylib"
++} else when ODIN_OS == .Windows {
+ 	@(extra_linker_flags="/NODEFAULTLIB:" + ("msvcrt" when RAYLIB_SHARED else "libcmt"))
+ 	foreign import lib {
+ 		"windows/raylibdll.lib" when RAYLIB_SHARED else "windows/raylib.lib" ,
+diff --git a/vendor/raylib/rlgl/rlgl.odin b/vendor/raylib/rlgl/rlgl.odin
+index 14a7cf5b0..d8e48502a 100644
+--- a/vendor/raylib/rlgl/rlgl.odin
++++ b/vendor/raylib/rlgl/rlgl.odin
+@@ -114,13 +114,16 @@ VERSION :: "5.0"
+ 
+ RAYLIB_SHARED :: #config(RAYLIB_SHARED, false)
+ RAYLIB_WASM_LIB :: #config(RAYLIB_WASM_LIB, "../wasm/libraylib.a")
++RAYLIB_SYSTEM :: #config(RAYLIB_SYSTEM, true)
+ 
+ // Note: We pull in the full raylib library. If you want a truly stand-alone rlgl, then:
+ // - Compile a separate rlgl library and use that in the foreign import blocks below.
+ // - Remove the `import rl "../."` line
+ // - Copy the code from raylib.odin for any types we alias from that package (see PixelFormat etc)
+ 
+-when ODIN_OS == .Windows {
++when RAYLIB_SYSTEM {
++	foreign import lib "system:raylib"
++} else when ODIN_OS == .Windows {
+ 	@(extra_linker_flags="/NODEFAULTLIB:" + ("msvcrt" when RAYLIB_SHARED else "libcmt"))
+ 	foreign import lib {
+ 		"../windows/raylibdll.lib" when RAYLIB_SHARED else "../windows/raylib.lib" ,
