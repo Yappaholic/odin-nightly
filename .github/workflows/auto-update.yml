@@ -8,7 +8,9 @@ jobs:
   nix-flake-update:
     permissions:
       contents: write
-      actions: write
+      id-token: write
+      issues: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -28,11 +30,11 @@ jobs:
       - name: Update flake.lock
         uses: DeterminateSystems/update-flake-lock@main
         with:
-          inputs: odin-src ols-src
+          pr-title: "Update nix flake inputs"
+          git-author-email: "yappaholic-bot@users.noreply.github.com"
+          git-author-name: "yappaholic-bot"
 
-      - name: Commit back to the repository
-        uses: stefanzweifel/git-auto-commit-action@v7
-        with:
-          commit_message: "Auto update lockfile"
-          commit_user_name: "yappaholic-bot"
-          commit_user_email: "yappaholic-bot@users.noreply.github.com"
+          git-comitter-email: "yappaholic-bot@users.noreply.github.com"
+          git-comitter-name: "yappaholic-bot"
+
+          inputs: odin-src ols-src
