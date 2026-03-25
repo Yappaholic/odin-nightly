@@ -31,10 +31,4 @@ jobs:
         uses: DeterminateSystems/update-flake-lock@main
         with:
           pr-title: "Update nix flake inputs"
-          git-author-email: "yappaholic-bot@users.noreply.github.com"
-          git-author-name: "yappaholic-bot"
-
-          git-comitter-email: "yappaholic-bot@users.noreply.github.com"
-          git-comitter-name: "yappaholic-bot"
-
           inputs: odin-src ols-src
