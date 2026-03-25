@@ -1,20 +1,39 @@
-name: update-flake-lock
-
+name: 'update flake lock'
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *' 
+    - cron: '0 0 * * *'
+permissions:
+  actions: write
+  contents: write
 jobs:
-  nix-flake-update:
-    permissions:
-      contents: write
-      id-token: write
-      issues: write
-      pull-requests: write
+  auto-update:
     runs-on: ubuntu-latest
+    env:
+      GIT_SSL_NO_VERIFY: 'true'
     steps:
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 8192
+          temp-reserve-mb: 1024
+          swap-size-mb: 4096
+          build-mount-path: '/nix'
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+          remove-codeql: 'true'
+          remove-docker-images: 'true'
+
       - name: Checkout repository
         uses: actions/checkout@v6
+
+      - name: Set up QEMU
+        id: qemu
+        uses: docker/setup-qemu-action@v4
+        with:
+          image: tonistiigi/binfmt:latest
+          platforms: all
 
       - name: Install nix
         uses: cachix/install-nix-action@v31
@@ -27,8 +46,31 @@ jobs:
             extra-platforms = i686-linux aarch64-linux arm-linux
             log-lines = 25
 
-      - name: Update flake.lock
-        uses: DeterminateSystems/update-flake-lock@main
+      - name: Set nix daemon tmpdir path
+        run: |
+          sudo mkdir -p /nix/tmpdir
+          sudo chown "$(whoami)" /nix/tmpdir
+
+          cat > override.conf <<EOF
+          [Service]
+          Environment="TMPDIR=/nix/tmpdir"
+          EOF
+          sudo mkdir /etc/systemd/system/nix-daemon.service.d/
+          sudo mv override.conf /etc/systemd/system/nix-daemon.service.d/override.conf
+          sudo systemctl daemon-reload
+          sudo systemctl restart nix-daemon
+
+      - name: Build nix packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          export TMPDIR=/nix/tmpdir
+          nix flake update ols-src
+          nix flake update odin-src
+
+      - name: Commit back to repository
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          pr-title: "Update nix flake inputs"
-          inputs: odin-src ols-src
+          commit_message: 'Auto update flake'
+          commit_user_name: 'yappaholic-bot'
+          commit_user_email: 'yappaholic-bot@users.noreply.github.com'
