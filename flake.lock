@@ -68,11 +68,11 @@
     "ols-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1781687448,
-        "narHash": "sha256-EtSXyhPD75j4JRnbLqD6KyBUZJx81RZTVl13gK7e4sk=",
+        "lastModified": 1781935795,
+        "narHash": "sha256-pl267/bNdnu25oPd74bl2GtoGFLh2eT4kVXC61EFoBw=",
         "owner": "DanielGavin",
         "repo": "ols",
-        "rev": "c9d74f3068e0b53f4d192f90352898375e0bb0ff",
+        "rev": "11ffaf62276770307bc4f53b90525459dd8fdfff",
         "type": "github"
       },
       "original": {
