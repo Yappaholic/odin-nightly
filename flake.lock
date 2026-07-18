@@ -52,11 +52,11 @@
     "odin-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1784197136,
-        "narHash": "sha256-pRKvD2iFkCzGWObWGUAERHO8qE22ifgxzB9712DJ+o4=",
+        "lastModified": 1784278743,
+        "narHash": "sha256-BoZzsBIof5e0NQeJ+h7kkP2N2jMnnoa+QguLOqJhyig=",
         "owner": "odin-lang",
         "repo": "Odin",
-        "rev": "65c3f2ded2d17dc04c7f86ae347cf87de1b2625c",
+        "rev": "6983813b4ece0e48539dc1d3e7c7437569db1dc2",
         "type": "github"
       },
       "original": {
@@ -68,11 +68,11 @@
     "ols-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1784195553,
-        "narHash": "sha256-lB0A5XQIrlaHa6j4YDHODQm2ym2Not/d6Vnycxg0cHI=",
+        "lastModified": 1784322356,
+        "narHash": "sha256-DmSbII+v34SbpBrv0trDIfCPuoTT+yMuVMduilzvR7k=",
         "owner": "DanielGavin",
         "repo": "ols",
-        "rev": "8451bdda6197518df8d2626ab51280ddc219d552",
+        "rev": "67ec8eae3cd6898a05ce1b1f6d632c2dafa197aa",
         "type": "github"
       },
       "original": {
