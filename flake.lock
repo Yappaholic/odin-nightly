@@ -52,11 +52,11 @@
     "odin-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1794356511,
-        "narHash": "sha256-FOWhPKh2llTJeN7nMdrG6Hsjg2g8t0kt2SbeQjXpYjY=",
+        "lastModified": 1794446214,
+        "narHash": "sha256-Rs1rmWEZAmYDVdmELEsDTxlOF8QNSy1IcJCY9Wv50ow=",
         "owner": "odin-lang",
         "repo": "Odin",
-        "rev": "9fe3dfa29ff54b0dd73489971cd608bcadce91b4",
+        "rev": "71ffacfd50002abf9a8054e256ca894bd866eec9",
         "type": "github"
       },
       "original": {
